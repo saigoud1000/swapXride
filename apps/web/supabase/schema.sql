@@ -6,7 +6,8 @@ create table profiles (
   profile_photo_url text,
   account_type text default 'private' check (account_type in ('private', 'dealer')),
   location_zip text,
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  phone_number text
 );
 
 -- Enable Row Level Security (RLS)
@@ -120,8 +121,15 @@ create policy "Users can manage their saved listings." on saved_listings
 create function public.handle_new_user() 
 returns trigger as $$
 begin
-  insert into public.profiles (id, email, display_name)
-  values (new.id, new.email, new.raw_user_meta_data->>'full_name');
+  insert into public.profiles (id, email, display_name, phone_number, location_zip, account_type)
+  values (
+    new.id, 
+    new.email, 
+    new.raw_user_meta_data->>'full_name',
+    new.raw_user_meta_data->>'phone_number',
+    new.raw_user_meta_data->>'zip_code',
+    COALESCE(new.raw_user_meta_data->>'account_type', 'private')
+  );
   return new;
 end;
 $$ language plpgsql security definer;
