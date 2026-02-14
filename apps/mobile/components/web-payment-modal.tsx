@@ -79,7 +79,7 @@ export function WebPaymentModal({
     return (
         <Modal visible={visible} transparent animationType="slide">
             <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                behavior={(Platform.OS as string) === "ios" ? "padding" : "height"}
                 style={styles.modalOverlay}
             >
                 <ScrollView

@@ -78,7 +78,6 @@ export default function ListingDetailsScreen() {
             <Stack.Screen
                 options={{
                     title: listing.have_model ? `${listing.have_year} ${listing.have_make} ${listing.have_model}` : 'Listing Details',
-                    headerBackTitleVisible: false,
                     headerTintColor: theme.text,
                     headerStyle: { backgroundColor: theme.background },
                     headerShadowVisible: false,

@@ -1,11 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import App from '../app/index'; // Adjust path if needed, Expo Router uses app directory
 
 // Mock Expo Router
 jest.mock('expo-router', () => ({
     useRouter: () => ({ push: jest.fn() }),
-    Stack: ({ children }) => <>{children}</>,
+    Stack: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
 test('renders correctly', () => {

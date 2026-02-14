@@ -113,7 +113,7 @@ export default function ChatScreen() {
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top']}>
-            <Stack.Screen options={{ title: partnerName, headerBackTitleVisible: false }} />
+            <Stack.Screen options={{ title: partnerName }} />
 
             {loading ? (
                 <View style={styles.center}>

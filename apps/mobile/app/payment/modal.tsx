@@ -39,6 +39,7 @@ export default function PaymentModal() {
         setLoading(true);
         try {
             const { paymentIntentId, clientSecret } = await fetchPaymentSheetParams();
+            // @ts-ignore
             const { error: initError } = await initPaymentSheet({
                 merchantDisplayName: "Generic Car Swap App",
                 paymentIntentClientSecret: clientSecret,
