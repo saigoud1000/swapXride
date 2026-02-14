@@ -1,0 +1,14 @@
+# General
+.DS_Store
+.env
+.env.local
+.env.*.local
+*.log
+
+# Dependencies
+node_modules/
+
+# OS specific
+.AppleDouble
+.LSOverride
+Icon

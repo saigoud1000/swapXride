@@ -1,0 +1,21 @@
+{
+    "name": "@swapxride/shared",
+    "version": "0.1.0",
+    "private": true,
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch"
+    },
+    "dependencies": {
+        "@supabase/supabase-js": "^2.39.0",
+        "date-fns": "^3.0.0",
+        "zod": "^3.22.4",
+        "clsx": "^2.1.0",
+        "tailwind-merge": "^2.2.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0"
+    }
+}

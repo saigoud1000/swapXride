@@ -1,0 +1,20 @@
+# AI Behavior Rules
+
+You are working on the SwapXride project. Strictly adhere to the following rules:
+
+## Authentication & Database
+- **ALWAYS** use **Supabase** for authentication and database interactions.
+- User management, sessions, and row-level security should be handled via Supabase Auth and Postgres.
+- **DO NOT** implement custom auth solutions or assume other storage mechanisms (like local storage for auth tokens) unless explicitly required for a specific edge case (and even then, verify against Supabase logic).
+
+## Payments
+- **ALWAYS** use **Stripe Sandbox** (Test Mode) for all payment implementations and testing.
+- **NEVER** use real money or production credentials during development or testing.
+- Use the configured test keys located in:
+  - Frontend: `apps/web/.env.local` (`NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`)
+  - Backend: `swapXride-api/src/main/resources/application.properties` (`stripe.api.key`)
+- Test payment flows using Stripe test cards (e.g., `4242 4242 4242 4242`).
+
+## Development Standards
+- When modifying payment logic, verify the correct API keys are being loaded.
+- Ensure that the `payment-modal` and other financial components communicate correctly with the backend endpoints (e.g., `/api/v1/payments/*`) which must be secured via Supabase JWTs.

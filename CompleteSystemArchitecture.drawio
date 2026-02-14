@@ -1,0 +1,627 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" version="29.3.0" pages="8">
+  <diagram id="9nR7ZjAYQ82VAFtKAkRQ" name="Full-Arch">
+    <mxGraphModel dx="1676" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="users" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" value="USERS (Web/Mobile)" vertex="1">
+          <mxGeometry height="60" width="300" x="420" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="route53" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Route 53 (DNS) carswap.com" vertex="1">
+          <mxGeometry height="50" width="180" x="480" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="1" source="users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="route53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cloudfront" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="CloudFront (CDN) Static Assets (React App)" vertex="1">
+          <mxGeometry height="80" width="160" x="280" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="route53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cloudfront">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="alb" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Application Load Balancer api.carswap.com" vertex="1">
+          <mxGeometry height="80" width="180" x="700" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="route53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="alb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-frontend" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="S3 Bucket (Frontend) - index.html - bundle.js" vertex="1">
+          <mxGeometry height="80" width="160" x="280" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="1" source="cloudfront" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3-frontend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ecs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;verticalAlign=top;fontSize=12;fontStyle=1" value="ECS Fargate Cluster" vertex="1">
+          <mxGeometry height="160" width="300" x="640" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="springboot" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" value="Spring Boot API (Docker)  - REST APIs - JWT Auth - Business Logic" vertex="1">
+          <mxGeometry height="100" width="240" x="670" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="1" source="alb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ecs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rds" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="RDS PostgreSQL  - Users - Listings - Messages - Photos" vertex="1">
+          <mxGeometry height="120" width="140" x="480" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="1" source="springboot" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rds">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="redis" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="ElastiCache (Redis)  - Cache - Sessions" vertex="1">
+          <mxGeometry height="100" width="120" x="720" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="edge7" edge="1" parent="1" source="springboot" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="redis-note" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=2" value="*Optional for MVP" vertex="1">
+          <mxGeometry height="20" width="100" x="730" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-images" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="S3 Bucket (Images)  - Car photos - Thumbnails" vertex="1">
+          <mxGeometry height="100" width="120" x="900" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="edge8" edge="1" parent="1" source="springboot" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3-images">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cloudfront-cdn" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="CloudFront (Image CDN)" vertex="1">
+          <mxGeometry height="50" width="120" x="900" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="edge9" edge="1" parent="1" source="s3-images" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cloudfront-cdn">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="services-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;fontSize=12;fontStyle=1" value="Support Services" vertex="1">
+          <mxGeometry height="200" width="360" x="40" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="ses" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=11" value="AWS SES → Email" vertex="1">
+          <mxGeometry height="30" width="150" x="60" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="cloudwatch" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=11" value="CloudWatch → Logs  Metrics" vertex="1">
+          <mxGeometry height="30" width="150" x="230" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="stripe" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=11" value="Stripe API → Payments" vertex="1">
+          <mxGeometry height="30" width="150" x="60" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="maps" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=11" value="Google Maps → Location" vertex="1">
+          <mxGeometry height="30" width="150" x="230" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="github" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=11" value="GitHub Actions → CI/CD" vertex="1">
+          <mxGeometry height="30" width="150" x="60" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="ecr" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=11" value="ECR → Docker Registry" vertex="1">
+          <mxGeometry height="30" width="150" x="230" y="740" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="SignUp" id="6-xd1hRkIDowh_tNS1Vy">
+    <mxGraphModel dx="1571" dy="736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user-actor" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="User" vertex="1">
+          <mxGeometry height="80" width="40" x="80" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="springboot-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;verticalAlign=top;fontSize=12;fontStyle=1" value="Spring Boot API" vertex="1">
+          <mxGeometry height="600" width="160" x="340" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rds-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=12;fontStyle=1" value="RDS PostgreSQL" vertex="1">
+          <mxGeometry height="600" width="120" x="660" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ses-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=12;fontStyle=1" value="AWS SES" vertex="1">
+          <mxGeometry height="600" width="120" x="900" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="step1" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="120" y="180" as="sourcePoint" />
+            <mxPoint x="340" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step1-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="POST /api/auth/register {email, password, displayName}" vertex="1">
+          <mxGeometry height="30" width="180" x="140" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="process1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;align=left;fontSize=10;" value="1. Validate input 2. Hash password (BCrypt) 3. Save to DB" vertex="1">
+          <mxGeometry height="60" width="120" x="360" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="step2" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="500" y="280" as="sourcePoint" />
+            <mxPoint x="660" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step2-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="INSERT user" vertex="1">
+          <mxGeometry height="20" width="100" x="520" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="step3" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="660" y="310" as="sourcePoint" />
+            <mxPoint x="500" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step3-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="User created" vertex="1">
+          <mxGeometry height="20" width="100" x="520" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="process2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;align=left;fontSize=10;" value="4. Generate JWT token 5. Send verification email" vertex="1">
+          <mxGeometry height="50" width="120" x="360" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="step4" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="500" y="400" as="sourcePoint" />
+            <mxPoint x="900" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step4-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="Send verification email" vertex="1">
+          <mxGeometry height="20" width="140" x="620" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="step5" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="340" y="460" as="sourcePoint" />
+            <mxPoint x="120" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step5-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="200 OK {token, user}" vertex="1">
+          <mxGeometry height="30" width="100" x="180" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="step6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" value="Store token in localStorage/cookie" vertex="1">
+          <mxGeometry height="50" width="120" x="40" y="500" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="yMpSrAJLDgOK31DTl5IW" name="Backend-GET">
+    <mxGraphModel dx="1257" dy="589" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user-b" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="User" vertex="1">
+          <mxGeometry height="80" width="40" x="80" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="api-b" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;verticalAlign=top;fontSize=12;fontStyle=1" value="Spring Boot API" vertex="1">
+          <mxGeometry height="500" width="160" x="340" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="db-b" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=12;fontStyle=1" value="RDS" vertex="1">
+          <mxGeometry height="500" width="120" x="660" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="req-b" edge="1" parent="1" style="endArrow=classic;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="160" as="sourcePoint" />
+            <mxPoint x="340" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="req-label-b" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=10;" value="GET /api/listings?page=0 size=20&#xa;Authorization: Bearer JWT" vertex="1">
+          <mxGeometry height="40" width="200" x="140" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="proc-b" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;fontSize=10;" value="1. Validate JWT&#xa;2. Query DB with pagination" vertex="1">
+          <mxGeometry height="60" width="160" x="360" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="query-b" edge="1" parent="1" style="endArrow=classic;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="250" as="sourcePoint" />
+            <mxPoint x="660" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="query-label-b" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=9;" value="SELECT * FROM listings&#xa;WHERE status=&#39;active&#39;&#xa;ORDER BY created_at DESC&#xa;LIMIT 20" vertex="1">
+          <mxGeometry height="80" width="160" x="500" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="db-resp-b" edge="1" parent="1" style="endArrow=classic;html=1;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="660" y="300" as="sourcePoint" />
+            <mxPoint x="500" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db-resp-label-b" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;" value="20 listings" vertex="1">
+          <mxGeometry height="30" width="100" x="530" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="format-b" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;fontSize=10;" value="3. Get S3 image URLs&#xa;4. Format response" vertex="1">
+          <mxGeometry height="60" width="180" x="360" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="resp-b" edge="1" parent="1" style="endArrow=classic;html=1;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="420" as="sourcePoint" />
+            <mxPoint x="120" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="resp-label-b" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;" value="200 OK — Listings Page" vertex="1">
+          <mxGeometry height="40" width="200" x="150" y="400" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="8Fr4PwTD_I09JDAcVxK1" name="Post-Ad Flow">
+    <mxGraphModel dx="1571" dy="736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user-img" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="User" vertex="1">
+          <mxGeometry height="80" width="40" x="80" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="api-img" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;verticalAlign=top;fontSize=12;fontStyle=1" value="Spring Boot API" vertex="1">
+          <mxGeometry height="600" width="160" x="340" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-img" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;verticalAlign=top;fontSize=12;fontStyle=1" value="AWS S3" vertex="1">
+          <mxGeometry height="600" width="120" x="660" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rds-img" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=12;fontStyle=1" value="RDS" vertex="1">
+          <mxGeometry height="600" width="120" x="900" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="upload-req" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="120" y="140" as="sourcePoint" />
+            <mxPoint x="340" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="upload-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="POST /api/listings/123/images multipart/form-data File: image.jpg (5MB)" vertex="1">
+          <mxGeometry height="40" width="190" x="130" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="validate-img" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;align=left;fontSize=9;" value="1. Validate file    - Type (jpg/png)    - Size (less than 10MB) 2. Generate unique filename" vertex="1">
+          <mxGeometry height="70" width="120" x="360" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-upload" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="500" y="260" as="sourcePoint" />
+            <mxPoint x="660" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s3-upload-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="3. Upload to S3" vertex="1">
+          <mxGeometry height="20" width="100" x="520" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-put" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10;" value="PUT /listings/123/abc123.jpg" vertex="1">
+          <mxGeometry height="60" width="80" x="680" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-resp" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="660" y="360" as="sourcePoint" />
+            <mxPoint x="500" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s3-resp-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="Upload success URL generated" vertex="1">
+          <mxGeometry height="30" width="100" x="520" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="db-save" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="500" y="410" as="sourcePoint" />
+            <mxPoint x="900" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db-save-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="4. Save photo record" vertex="1">
+          <mxGeometry height="20" width="120" x="640" y="385" as="geometry" />
+        </mxCell>
+        <mxCell id="db-insert-img" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=10;" value="INSERT INTO photos (listing_id, photo_url)" vertex="1">
+          <mxGeometry height="50" width="80" x="920" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="api-resp-img" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="340" y="500" as="sourcePoint" />
+            <mxPoint x="120" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="api-resp-label-img" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="200 OK {photoUrl: &#39;https://cdn...&#39;}" vertex="1">
+          <mxGeometry height="30" width="140" x="160" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="display-img" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" value="5. React displays image &lt;img src=&quot;https://...&quot; /&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="40" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="cf-section" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1" value="6. Browser fetches from CloudFront" vertex="1">
+          <mxGeometry height="20" width="240" x="200" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="browser-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Browser" vertex="1">
+          <mxGeometry height="40" width="120" x="40" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="cf-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="CloudFront CDN" vertex="1">
+          <mxGeometry height="40" width="160" x="340" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-box-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="S3 Bucket" vertex="1">
+          <mxGeometry height="40" width="120" x="660" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="cf-fetch" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="160" y="650" as="sourcePoint" />
+            <mxPoint x="340" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cf-fetch-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" value="GET image" vertex="1">
+          <mxGeometry height="20" width="80" x="200" y="625" as="geometry" />
+        </mxCell>
+        <mxCell id="cf-s3" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="500" y="650" as="sourcePoint" />
+            <mxPoint x="660" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cf-s3-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontStyle=2" value="If not cached" vertex="1">
+          <mxGeometry height="20" width="100" x="520" y="625" as="geometry" />
+        </mxCell>
+        <mxCell id="img-delivered" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;strokeColor=#27ae60;strokeWidth=2;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="340" y="670" as="sourcePoint" />
+            <mxPoint x="160" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="img-delivered-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#27ae60;fontStyle=1" value="Image delivered (less than 100ms)" vertex="1">
+          <mxGeometry height="20" width="140" x="180" y="675" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ffzUV77neSBPKGUc67zN" name="Update-Listing">
+    <mxGraphModel dx="1257" dy="589" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="User" vertex="1">
+          <mxGeometry height="80" width="40" x="110" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;verticalAlign=top;fontSize=12;fontStyle=1" value="Spring Boot API" vertex="1">
+          <mxGeometry height="600" width="160" x="370" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;verticalAlign=top;fontSize=12;fontStyle=1" value="AWS S3" vertex="1">
+          <mxGeometry height="600" width="120" x="690" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=12;fontStyle=1" value="RDS" vertex="1">
+          <mxGeometry height="600" width="120" x="930" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-5" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="150" y="80" as="sourcePoint" />
+            <mxPoint x="370" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-6" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="Update /api/listings/123&lt;br&gt;&lt;br&gt;form-data: {Request Body} &lt;br&gt;&lt;br&gt;File: image.jpg (5MB)" vertex="1">
+          <mxGeometry height="40" width="190" x="160" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;align=left;fontSize=9;" value="1. Validate file    - Type (jpg/png)    - Size (less than 10MB) 2. Generate unique filename" vertex="1">
+          <mxGeometry height="70" width="120" x="390" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-8" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="530" y="200" as="sourcePoint" />
+            <mxPoint x="690" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-9" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="3. Upload to S3" vertex="1">
+          <mxGeometry height="20" width="100" x="550" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10;" value="PUT /listings/123/abc123.jpg" vertex="1">
+          <mxGeometry height="60" width="80" x="710" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-11" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="690" y="300" as="sourcePoint" />
+            <mxPoint x="530" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-12" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="Upload success URL generated" vertex="1">
+          <mxGeometry height="30" width="100" x="550" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-13" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="530" y="350" as="sourcePoint" />
+            <mxPoint x="930" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-14" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="4. Save photo record" vertex="1">
+          <mxGeometry height="20" width="120" x="670" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=10;" value="INSERT INTO photos (listing_id, photo_url)" vertex="1">
+          <mxGeometry height="50" width="80" x="950" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-16" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="370" y="440" as="sourcePoint" />
+            <mxPoint x="150" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-17" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="200 OK {photoUrl: &#39;https://cdn...&#39;}" vertex="1">
+          <mxGeometry height="30" width="140" x="190" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" value="5. React displays image &lt;img src=&quot;https://...&quot; /&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="70" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-19" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1" value="6. Browser fetches from CloudFront" vertex="1">
+          <mxGeometry height="20" width="240" x="230" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Browser" vertex="1">
+          <mxGeometry height="40" width="120" x="70" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="CloudFront CDN" vertex="1">
+          <mxGeometry height="40" width="160" x="370" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="S3 Bucket" vertex="1">
+          <mxGeometry height="40" width="120" x="690" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-23" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="190" y="590" as="sourcePoint" />
+            <mxPoint x="370" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-24" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" value="GET image" vertex="1">
+          <mxGeometry height="20" width="80" x="230" y="565" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-25" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="530" y="590" as="sourcePoint" />
+            <mxPoint x="690" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-26" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontStyle=2" value="If not cached" vertex="1">
+          <mxGeometry height="20" width="100" x="550" y="565" as="geometry" />
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-27" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;strokeColor=#27ae60;strokeWidth=2;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="370" y="610" as="sourcePoint" />
+            <mxPoint x="190" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yjE9FZAv1ggSEqCNYV__-28" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#27ae60;fontStyle=1" value="Image delivered (less than 100ms)" vertex="1">
+          <mxGeometry height="20" width="140" x="210" y="615" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="B6j44E6fL5grTQUFot6g" name="Delete-Listing">
+    <mxGraphModel dx="1257" dy="589" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="lbYIiQxSorj4qX9WNuUe" name="Send-Message">
+    <mxGraphModel dx="2965" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-m" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1" value="SEND MESSAGE (User A)" vertex="1">
+          <mxGeometry height="30" width="300" x="400" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="userA" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="User A (Sender)" vertex="1">
+          <mxGeometry height="80" width="40" x="80" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="api-m" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=12;fontStyle=1" value="Spring Boot" vertex="1">
+          <mxGeometry height="200" width="160" x="340" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="db-m" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=12;fontStyle=1" value="RDS" vertex="1">
+          <mxGeometry height="200" width="120" x="660" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="send-m" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="120" y="130" as="sourcePoint" />
+            <mxPoint x="340" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="send-label-m" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="POST /api/messages {listingId, recipientId, text}" vertex="1">
+          <mxGeometry height="30" width="180" x="140" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="validate-m" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=10;" value="1. Validate JWT 2. Save message" vertex="1">
+          <mxGeometry height="40" width="120" x="360" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="db-insert-m" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="500" y="210" as="sourcePoint" />
+            <mxPoint x="660" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db-insert-label-m" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="INSERT message" vertex="1">
+          <mxGeometry height="20" width="100" x="520" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="response-m" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="340" y="240" as="sourcePoint" />
+            <mxPoint x="120" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="response-label-m" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="200 OK {messageId}" vertex="1">
+          <mxGeometry height="20" width="140" x="160" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="title-p" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1" value="POLLING FOR NEW MESSAGES (User B)" vertex="1">
+          <mxGeometry height="30" width="400" x="350" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="userB" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="User B (Recipient)" vertex="1">
+          <mxGeometry height="80" width="40" x="80" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="api-p" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=12;fontStyle=1" value="Spring Boot" vertex="1">
+          <mxGeometry height="300" width="160" x="340" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="db-p" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=12;fontStyle=1" value="RDS" vertex="1">
+          <mxGeometry height="300" width="120" x="660" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="poll-req" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="120" y="410" as="sourcePoint" />
+            <mxPoint x="340" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="poll-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" value="GET /api/messages/conversation/123 ?since=lastMessageId (Every 15 seconds)" vertex="1">
+          <mxGeometry height="40" width="200" x="130" y="365" as="geometry" />
+        </mxCell>
+        <mxCell id="validate-p" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=10;" value="1. Validate JWT 2. Query new messages" vertex="1">
+          <mxGeometry height="40" width="120" x="360" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="db-query-p" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="500" y="490" as="sourcePoint" />
+            <mxPoint x="660" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db-query-label-p" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" value="SELECT * FROM messages WHERE id &gt; lastMessageId" vertex="1">
+          <mxGeometry height="30" width="140" x="510" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="db-resp-p" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="660" y="530" as="sourcePoint" />
+            <mxPoint x="500" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db-resp-label-p" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="New messages" vertex="1">
+          <mxGeometry height="20" width="100" x="530" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="api-resp-p" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="340" y="570" as="sourcePoint" />
+            <mxPoint x="120" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="api-resp-label-p" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" value="200 OK {messages: [...]}" vertex="1">
+          <mxGeometry height="20" width="140" x="160" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="update-ui" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" value="3. React updates UI 4. Wait 15 sec, repeat" vertex="1">
+          <mxGeometry height="40" width="120" x="40" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="loop-arrow" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;curved=1;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="20" y="525" />
+            </Array>
+            <mxPoint x="100" y="640" as="sourcePoint" />
+            <mxPoint x="100" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="loop-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=2" value="Poll every 15s" vertex="1">
+          <mxGeometry height="20" width="80" x="-50" y="515" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="L1k73iNDx_jabkxC-FrL" name="CiCD">
+    <mxGraphModel dx="1257" dy="589" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="github-cicd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1" value="GitHub Repository" vertex="1">
+          <mxGeometry height="60" width="220" x="480" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="git-push" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontStyle=2" value="git push (main branch)" vertex="1">
+          <mxGeometry height="20" width="160" x="520" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow1-cicd" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=2;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="590" y="120" as="sourcePoint" />
+            <mxPoint x="590" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actions-cicd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;verticalAlign=top;" value="GitHub Actions Workflow" vertex="1">
+          <mxGeometry height="240" width="460" x="360" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="step1-cicd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" value="1. Build JAR&#xa;mvn clean package" vertex="1">
+          <mxGeometry height="50" width="180" x="380" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="step2-cicd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" value="2. Build Docker Image&#xa;docker build" vertex="1">
+          <mxGeometry height="50" width="180" x="600" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="step3-cicd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" value="3. Run Tests&#xa;mvn test" vertex="1">
+          <mxGeometry height="50" width="180" x="380" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="step4-cicd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" value="4. Tag &amp; Push to ECR&#xa;docker push" vertex="1">
+          <mxGeometry height="50" width="180" x="600" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="deploy" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1" value="5. Deploy to ECS Fargate" vertex="1">
+          <mxGeometry height="60" width="220" x="480" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=2;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="590" y="420" as="sourcePoint" />
+            <mxPoint x="590" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

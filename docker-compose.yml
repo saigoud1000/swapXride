@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+
+  # Backend API (Java Spring Boot)
+  swapxride-api:
+    build: ./swapXride-api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:6543/postgres?prepareThreshold=0&sslmode=require
+      SPRING_DATASOURCE_USERNAME: postgres.ocqjktjtoissltwkyvdc
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-password}
+      JWT_SECRET: ${JWT_SECRET:-ee9799bd-d1e1-42fb-a032-024a1d6e26b4}
+
+  # Frontend Web App (Next.js)
+  swapxride-ui:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+        - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+        - NEXT_PUBLIC_API_URL=http://localhost:8080/api/v1
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8080/api/v1}
+      INTERNAL_API_URL: http://swapxride-api:8080/api/v1
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    depends_on:
+      - swapxride-api
