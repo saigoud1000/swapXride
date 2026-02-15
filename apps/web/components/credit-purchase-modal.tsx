@@ -72,6 +72,7 @@ function CheckoutForm({ amount, credits, onSuccess }: { amount: number; credits:
 
     return (
         <form id="payment-form" onSubmit={handleSubmit} className="space-y-4">
+            {/* @ts-ignore */}
             <PaymentElement id="payment-element" />
             {message && <div className="text-red-500 text-sm">{message}</div>}
             <Button disabled={isLoading || !stripe} id="submit" className="w-full">
@@ -168,6 +169,7 @@ export function CreditPurchaseModal({
                             &larr; Back to Packages
                         </Button>
                         {clientSecret && (
+                            // @ts-ignore
                             <Elements options={options} stripe={stripePromise}>
                                 <CheckoutForm amount={selectedPackage.amount} credits={selectedPackage.credits} onSuccess={handleSuccess} />
                             </Elements>

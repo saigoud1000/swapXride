@@ -39,6 +39,7 @@ export default function PaymentModal() {
         setLoading(true);
         try {
             const { paymentIntentId, clientSecret } = await fetchPaymentSheetParams();
+            // @ts-ignore
             const { error: initError } = await initPaymentSheet({
                 merchantDisplayName: "Generic Car Swap App",
                 paymentIntentClientSecret: clientSecret,
@@ -57,7 +58,7 @@ export default function PaymentModal() {
             } else {
                 // Success! Activate listing
                 if (listingId) {
-                    await api.post(`/listings/${listingId}/activate`);
+                    await api.post(`/listings/${listingId}/activate`, {});
                     Alert.alert('Success', 'Your listing is now active!');
                     router.dismiss();
                     router.push({ pathname: '/listings/[id]', params: { id: listingId as string } });

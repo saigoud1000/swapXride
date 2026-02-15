@@ -1,4 +1,4 @@
-import { Utils, Message } from '@swapxride/shared';
+import { Message } from '@swapxride/shared';
 import { api } from '@/lib/api';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
@@ -51,7 +51,7 @@ export default function MessagesScreen() {
                 onPress={() => {
                     const partnerId = partner.id;
                     router.push({
-                        pathname: `/messages/${partnerId}`,
+                        pathname: `/messages/${partnerId}` as any,
                         params: { listingId: item.listing?.id }
                     });
                 }}

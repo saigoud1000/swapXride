@@ -40,12 +40,36 @@ export function SignupForm() {
         <form onSubmit={handleSubmit}>
             <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="fullName">Full Name</Label>
+                    <Input id="fullName" name="fullName" placeholder="John Doe" required />
+                </div>
+                <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" name="email" type="email" placeholder="m@example.com" required />
                 </div>
                 <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="password">Password</Label>
-                    <Input id="password" name="password" type="password" required />
+                    <Input id="password" name="password" type="password" placeholder="Min 6 characters" required />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="phone">Phone Number (Optional)</Label>
+                    <Input id="phone" name="phone" type="tel" placeholder="(555) 555-5555" />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="zipCode">Zip Code</Label>
+                    <Input id="zipCode" name="zipCode" placeholder="12345" required />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="accountType">Account Type</Label>
+                    <select
+                        id="accountType"
+                        name="accountType"
+                        className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        defaultValue="private"
+                    >
+                        <option value="private">Private Seller</option>
+                        <option value="dealer">Dealer</option>
+                    </select>
                 </div>
             </div>
             {error && (

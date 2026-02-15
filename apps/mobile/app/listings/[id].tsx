@@ -78,7 +78,6 @@ export default function ListingDetailsScreen() {
             <Stack.Screen
                 options={{
                     title: listing.have_model ? `${listing.have_year} ${listing.have_make} ${listing.have_model}` : 'Listing Details',
-                    headerBackTitleVisible: false,
                     headerTintColor: theme.text,
                     headerStyle: { backgroundColor: theme.background },
                     headerShadowVisible: false,
@@ -238,7 +237,7 @@ export default function ListingDetailsScreen() {
                 <TouchableOpacity
                     style={[styles.messageButton, { backgroundColor: theme.tint }]}
                     onPress={() => router.push({
-                        pathname: `/messages/${listing.user_id}`,
+                        pathname: `/messages/${listing.user_id}` as any,
                         params: { listingId: listing.id }
                     })}
                 >

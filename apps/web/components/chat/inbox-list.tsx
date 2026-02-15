@@ -38,11 +38,11 @@ export function InboxList({ conversations, currentUserId, selectedUserId, onSele
                                 )}
                             >
                                 <Avatar>
-                                    <AvatarFallback>{otherUser.display_name?.[0] || otherUser.email[0].toUpperCase()}</AvatarFallback>
+                                    <AvatarFallback>{otherUser.displayName?.[0] || otherUser.email[0].toUpperCase()}</AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex justify-between items-baseline">
-                                        <span className="font-semibold truncate">{otherUser.display_name || otherUser.email}</span>
+                                        <span className="font-semibold truncate">{otherUser.displayName || otherUser.email}</span>
                                         <span className="text-xs text-muted-foreground whitespace-nowrap ml-2">
                                             {formatDistanceToNow(new Date(msg.createdAt), { addSuffix: true })}
                                         </span>
