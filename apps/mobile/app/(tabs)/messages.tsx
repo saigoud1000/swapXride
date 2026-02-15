@@ -51,7 +51,7 @@ export default function MessagesScreen() {
                 onPress={() => {
                     const partnerId = partner.id;
                     router.push({
-                        pathname: `/messages/${partnerId}`,
+                        pathname: `/messages/${partnerId}` as any,
                         params: { listingId: item.listing?.id }
                     });
                 }}

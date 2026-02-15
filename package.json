@@ -7,11 +7,15 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.78.0",
     "jsonwebtoken": "^9.0.3",
     "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "husky": "^9.0.11"
   }
 }

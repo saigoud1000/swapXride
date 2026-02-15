@@ -58,7 +58,7 @@ export default function PaymentModal() {
             } else {
                 // Success! Activate listing
                 if (listingId) {
-                    await api.post(`/listings/${listingId}/activate`);
+                    await api.post(`/listings/${listingId}/activate`, {});
                     Alert.alert('Success', 'Your listing is now active!');
                     router.dismiss();
                     router.push({ pathname: '/listings/[id]', params: { id: listingId as string } });

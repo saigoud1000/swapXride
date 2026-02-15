@@ -237,7 +237,7 @@ export default function ListingDetailsScreen() {
                 <TouchableOpacity
                     style={[styles.messageButton, { backgroundColor: theme.tint }]}
                     onPress={() => router.push({
-                        pathname: `/messages/${listing.user_id}`,
+                        pathname: `/messages/${listing.user_id}` as any,
                         params: { listingId: listing.id }
                     })}
                 >

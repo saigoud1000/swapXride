@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Running type checks..."
+
+# Mobile Type Check
+echo "Checking Mobile App..."
+if ! npx tsc -p apps/mobile/tsconfig.json --noEmit; then
+  echo "❌ Mobile App Type Check Failed!"
+  exit 1
+fi
+
+# Web Type Check
+echo "Checking Web App..."
+if ! (cd apps/web && npx tsc --noEmit); then
+  echo "❌ Web App Type Check Failed!"
+  exit 1
+fi
+
+echo "✅ All Type Checks Passed!"
